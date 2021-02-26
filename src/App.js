@@ -24,42 +24,42 @@ function App() {
 
 //custom hook
 const useGameStar = () => {
-  //số sao
-const [stars, setStars] = useState(utils.random(1, 9));
-//dãy số chưa chọn
-const [availableNums, setAvailableNums] = useState(utils.range(1, 9));
-//mảng 2 số được chọn
-const [candidateNums, setCandicateNums] = useState([]);
-//play again
-const [secondTime, setSecondTime] = useState(10);
-//Dếm ngược thời gian sử dụng effect hooks
-useEffect(() => {
-  if(secondTime > 0 && availableNums.length > 0){
-    const timerId = setTimeout(() => {
-      setSecondTime(secondTime - 1);
-    }, 1000);
+    //số sao
+  const [stars, setStars] = useState(utils.random(1, 9));
+  //dãy số chưa chọn
+  const [availableNums, setAvailableNums] = useState(utils.range(1, 9));
+  //mảng 2 số được chọn
+  const [candidateNums, setCandicateNums] = useState([]);
+  //play again
+  const [secondTime, setSecondTime] = useState(10);
+  //Dếm ngược thời gian sử dụng effect hooks
+  useEffect(() => {
+    if(secondTime > 0 && availableNums.length > 0){
+      const timerId = setTimeout(() => {
+        setSecondTime(secondTime - 1);
+      }, 1000);
 
-    return () => clearTimeout(timerId);
-  }
-});
-//setup lại mảng chưa chọn và đã chọn
-const setGameStar = (newCandidateNums) => {
-  if(utils.sum(newCandidateNums) !== stars){
-    setCandicateNums(newCandidateNums);
-  }
-  else{
-      //setup lại mảng chưa chọn
-      const newAvailableNums = availableNums.filter(
-            n => !newCandidateNums.includes(n));
-      setAvailableNums(newAvailableNums);
-      //setup lại số sao(random)
-      setStars(utils.randomSumIn(newAvailableNums, 9));
-      //setup lại mảng đã chọn
-      setCandicateNums([]);
-  }
-};
+      return () => clearTimeout(timerId);
+    }
+  });
+    //setup lại mảng chưa chọn và đã chọn
+    const setGameStar = (newCandidateNums) => {
+      if(utils.sum(newCandidateNums) !== stars){
+        setCandicateNums(newCandidateNums);
+      }
+      else{
+          //setup lại mảng chưa chọn
+          const newAvailableNums = availableNums.filter(
+                n => !newCandidateNums.includes(n));
+          setAvailableNums(newAvailableNums);
+          //setup lại số sao(random)
+          setStars(utils.randomSumIn(newAvailableNums, 9));
+          //setup lại mảng đã chọn
+          setCandicateNums([]);
+      }
+    };
 
-return {stars, availableNums, candidateNums, secondTime, setGameStar};
+    return { stars, availableNums, candidateNums, secondTime, setGameStar };
 };
 
 //custom hook
